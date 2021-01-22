@@ -24,7 +24,7 @@ jobs:
       run: |
         user='${{ secrets.USER1 }}'
         pwd='${{ secrets.PWD1 }}'
-        step='${{ secrets.STEP1 }}'
+        step='${{ secrets.STEP }}'
         
         python3 main.py <<EOF
         ${sckey}
@@ -36,7 +36,7 @@ jobs:
       run: |
         user='${{ secrets.USER2 }}'
         pwd='${{ secrets.PWD2 }}'
-        step='${{ secrets.STEP2 }}'
+        step='${{ secrets.STEP }}'
         
         python3 main.py <<EOF
         ${sckey}
@@ -48,7 +48,7 @@ jobs:
       run: |
         user='${{ secrets.USER3 }}'
         pwd='${{ secrets.PWD3 }}'
-        step='${{ secrets.STEP3 }}'
+        step='${{ secrets.STEP }}'
         
         python3 main.py <<EOF
         ${sckey}
