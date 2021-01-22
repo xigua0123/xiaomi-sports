@@ -1,13 +1,13 @@
 name: 刷步数
 
 on:
-  workflow_dispatch:
+ workflow_dispatch:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: 0 2 * * *
+    - cron: 0 10 * * *
 
 jobs:
   build:
@@ -20,35 +20,12 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.7
-    - name: 开始 账号 1
+    - name: 开始
       run: |
         pip install requests
-        user='${{ secrets.USER1 }}'
-        pwd='${{ secrets.PWD1 }}'
-        step='${{ secrets.STEP }}'
-        
-        python3 main.py <<EOF
-        ${sckey}
-        ${user}
-        ${pwd}
-        ${step}
-        EOF
-    - name: 开始 账号 2
-      run: |
-        user='${{ secrets.USER2 }}'
-        pwd='${{ secrets.PWD2 }}'
-        step='${{ secrets.STEP }}'
-        
-        python3 main.py <<EOF
-        ${sckey}
-        ${user}
-        ${pwd}
-        ${step}
-        EOF
-    - name: 开始 账号 3
-      run: |
-        user='${{ secrets.USER3 }}'
-        pwd='${{ secrets.PWD3 }}'
+        sckey='${{ secrets.SCKEY }}'
+        user='${{ secrets.USER }}'
+        pwd='${{ secrets.PWD }}'
         step='${{ secrets.STEP }}'
         
         python3 main.py <<EOF
