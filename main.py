@@ -2,12 +2,38 @@
 # python >=3.8
 
 import requests,time,re,json,random
+import os
+
+TG_BOT_TOKEN = ''           # telegram bot token 自行申请
+TG_USER_ID = ''             # telegram 用户ID
 
 now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 headers = {
         'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 9; MI 6 MIUI/20.6.18)'
         }
- 
+
+if "TG_BOT_TOKEN" in os.environ and os.environ["TG_BOT_TOKEN"] and "TG_USER_ID" in os.environ and os.environ["TG_USER_ID"]:
+    TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]
+    TG_USER_ID = os.environ["TG_USER_ID"]
+    print("Telegram 推送打开")
+
+def telegram_bot(title, content):
+    print("\n")
+    tg_bot_token = TG_BOT_TOKEN
+    tg_user_id = TG_USER_ID
+    if "TG_BOT_TOKEN" in os.environ and "TG_USER_ID" in os.environ:
+        tg_bot_token = os.environ["TG_BOT_TOKEN"]
+        tg_user_id = os.environ["TG_USER_ID"]
+    if not tg_bot_token or not tg_user_id:
+        print("Telegram推送的tg_bot_token或者tg_user_id未设置!!\n取消推送")
+        return
+    print("Telegram 推送开始")
+    send_data = {"chat_id": tg_user_id, "text": title +
+                 '\n\n'+content, "disable_web_page_preview": "true"}
+    response = requests.post(
+        url='https://api.telegram.org/bot%s/sendMessage' % (tg_bot_token), data=send_data)
+    print(response.text)
+
 #获取登录code
 def get_code(location):
     code_pattern = re.compile("(?<=access=).*?(?=&)")
@@ -67,8 +93,8 @@ def main(user, passwd, step):
         return
     
     if step == '':
-        print ("已设置为随机步数（10000-19999）")
-        step = str(random.randint(10000,19999))
+        print ("已设置为随机步数（20000-2500）")
+        step = str(random.randint(20000,2500))
     login_token = 0
     login_token,userid = login(user,password)
     if login_token == 0:
@@ -117,28 +143,6 @@ def get_app_token(login_token):
     #print("app_token获取成功！")
     #print(app_token)
     return app_token
-    
-# 推送server
-def push_wx(sckey, desp=""):
-    """
-    推送消息到微信
-    """
-    if sckey == '':
-        print("[注意] 未提供sckey，不进行推送！")
-    else:
-        server_url = f"https://sc.ftqq.com/{sckey}.send"
-        params = {
-            "text": '小米运动 步数修改',
-            "desp": desp
-        }
- 
-        response = requests.get(server_url, params=params)
-        json_data = response.json()
- 
-        if json_data['errno'] == 0:
-            print(f"[{now}] 推送成功。")
-        else:
-            print(f"[{now}] 推送失败：{json_data['errno']}({json_data['errmsg']})")
 
 if __name__ ==  "__main__":
     # ServerChan
@@ -164,7 +168,7 @@ if __name__ ==  "__main__":
             elif str(step) == '0':
                 step = ''
             push += main(user_list[line], passwd_list[line], step) + '\n'
-        push_wx(sckey, push)
+        telegram_bot("小米运动", push)
     else:
         print('用户名和密码数量不对')
     
