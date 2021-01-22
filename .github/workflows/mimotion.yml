@@ -22,6 +22,7 @@ jobs:
         python-version: 3.7
     - name: 开始 账号 1
       run: |
+        pip install requests
         user='${{ secrets.USER1 }}'
         pwd='${{ secrets.PWD1 }}'
         step='${{ secrets.STEP }}'
