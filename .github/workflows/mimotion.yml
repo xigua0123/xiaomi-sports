@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: 0 1 * * *
+    - cron: 0 2 * * *
 
 jobs:
   build:
@@ -20,13 +20,35 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.7
-    - name: 开始
+    - name: 开始 账号 1
       run: |
-        pip install requests
-        sckey='${{ secrets.SCKEY }}'
-        user='${{ secrets.USER }}'
-        pwd='${{ secrets.PWD }}'
-        step='${{ secrets.STEP }}'
+        user='${{ secrets.USER1 }}'
+        pwd='${{ secrets.PWD1 }}'
+        step='${{ secrets.STEP1 }}'
+        
+        python3 main.py <<EOF
+        ${sckey}
+        ${user}
+        ${pwd}
+        ${step}
+        EOF
+    - name: 开始 账号 2
+      run: |
+        user='${{ secrets.USER2 }}'
+        pwd='${{ secrets.PWD2 }}'
+        step='${{ secrets.STEP2 }}'
+        
+        python3 main.py <<EOF
+        ${sckey}
+        ${user}
+        ${pwd}
+        ${step}
+        EOF
+    - name: 开始 账号 3
+      run: |
+        user='${{ secrets.USER3 }}'
+        pwd='${{ secrets.PWD3 }}'
+        step='${{ secrets.STEP3 }}'
         
         python3 main.py <<EOF
         ${sckey}
