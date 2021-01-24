@@ -5,7 +5,7 @@ import requests,time,re,json,random
 import os
 
 TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]           # telegram bot token 自行申请
-TG_USER_ID = os.environ["TG_BOT_TOKEN"]             # telegram 用户ID
+TG_USER_ID = os.environ["TG_USER_ID"]             # telegram 用户ID
 
 def telegram_bot(title, content):
     print("\n")
