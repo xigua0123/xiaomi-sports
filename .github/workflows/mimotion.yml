@@ -23,14 +23,10 @@ jobs:
     - name: 开始
       run: |
         pip install requests
-        sckey='${{ secrets.SCKEY }}'
-        user='${{ secrets.USER }}'
-        pwd='${{ secrets.PWD }}'
-        step='${{ secrets.STEP }}'
-        
-        python3 main.py <<EOF
-        ${sckey}
-        ${user}
-        ${pwd}
-        ${step}
-        EOF
+        python3 main.py
+      env:
+       XMYD_USER: ${{ secrets.XMYD_USER }}  #必须
+       XMYD_PASSWD: ${{ secrets.XMYD_PASSWD }}  #必须
+       XMYD_STEP: ${{ secrets.XMYD_STEP }}  #必须:  
+       TG_BOT_TOKEN: ${{secrets.TG_BOT_TOKEN}} # tg通知token
+       TG_USER_ID:  ${{secrets.TG_USER_ID}}    # tg通知id
