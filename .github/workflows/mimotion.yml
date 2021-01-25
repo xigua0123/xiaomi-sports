@@ -1,11 +1,7 @@
 name: 刷步数
 
 on:
- workflow_dispatch:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
   schedule:
     - cron: 0 10 * * *
 
