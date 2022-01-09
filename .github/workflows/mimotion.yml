@@ -3,7 +3,7 @@ name: 刷步数
 on:
   workflow_dispatch:
   schedule:
-    - cron: 8 6 * * *
+    - cron: 8 4 * * *
 
 jobs:
   build:
